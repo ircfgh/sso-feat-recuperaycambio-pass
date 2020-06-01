@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="70675ca02bdc4849968d98bf8951a82b" Name="Diagram1">
+        <EntityTypeShape EntityType="AuthModel.Rol" Width="1.5" PointX="0.625" PointY="1.625" />
+        <EntityTypeShape EntityType="AuthModel.RolUsuario" Width="1.5" PointX="3.375" PointY="1.625" />
+        <EntityTypeShape EntityType="AuthModel.Session" Width="1.5" PointX="9" PointY="1.75" />
+        <EntityTypeShape EntityType="AuthModel.Usuario" Width="1.5" PointX="6" PointY="1.375" />
+        <AssociationConnector Association="AuthModel.FK__RolUsuari__IdRol__2F10007B" />
+        <AssociationConnector Association="AuthModel.FK__RolUsuari__IdUsu__2E1BDC42" />
+        <AssociationConnector Association="AuthModel.FK__Session__IdUsuar__300424B4" />
+        <EntityTypeShape EntityType="AuthModel.usuarios" Width="1.5" PointX="0.75" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

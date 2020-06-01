@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AuthModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoRol" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DescRol" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolUsuario">
+          <Key>
+            <PropertyRef Name="IdRolUsuario" />
+          </Key>
+          <Property Name="IdRolUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdRol" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="IdSession" />
+          </Key>
+          <Property Name="IdSession" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaTermino" Type="datetime" />
+          <Property Name="IdEstatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="IdEstatus" Type="bit" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Paterno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Materno" Type="varchar" MaxLength="40" />
+          <Property Name="Mail" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="IdUsuarioCrea" Type="int" />
+          <Property Name="FechaCrea" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="FechaVigenciaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaVigenciaFin" Type="date" />
+          <Property Name="token_recovery" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="primerApellido" Type="varchar" MaxLength="50" />
+          <Property Name="segundoApellido" Type="varchar" MaxLength="50" />
+          <Property Name="nombres" Type="varchar" MaxLength="100" />
+          <Property Name="rfc" Type="varchar" MaxLength="50" />
+          <Property Name="contraseña" Type="varchar" MaxLength="100" />
+          <Property Name="curp" Type="varchar" MaxLength="50" />
+          <Property Name="correo_1" Type="varchar" MaxLength="100" />
+          <Property Name="correo_2" Type="varchar" MaxLength="100" />
+          <Property Name="vigenciaInicio" Type="datetime" />
+          <Property Name="idUsuarioAlta" Type="int" />
+          <Property Name="vigenciaFin" Type="datetime" />
+          <Property Name="idUsuarioUltimaModificacion" Type="int" />
+          <Property Name="idStatus" Type="bit" />
+          <Property Name="idUsuarioAnterior" Type="int" />
+          <Property Name="token_recovery" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__RolUsuari__IdRol__2F10007B">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="RolUsuario" Type="Self.RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolUsuari__IdUsu__2E1BDC42">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="RolUsuario" Type="Self.RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Session__IdUsuar__300424B4">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Session" Type="Self.Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AuthModelStoreContainer">
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="adm" store:Type="Tables" />
+          <EntitySet Name="RolUsuario" EntityType="Self.RolUsuario" Schema="adm" store:Type="Tables" />
+          <EntitySet Name="Session" EntityType="Self.Session" Schema="adm" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="adm" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="adm" store:Type="Tables" />
+          <AssociationSet Name="FK__RolUsuari__IdRol__2F10007B" Association="Self.FK__RolUsuari__IdRol__2F10007B">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolUsuario" EntitySet="RolUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolUsuari__IdUsu__2E1BDC42" Association="Self.FK__RolUsuari__IdUsu__2E1BDC42">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="RolUsuario" EntitySet="RolUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Session__IdUsuar__300424B4" Association="Self.FK__Session__IdUsuar__300424B4">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuthModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DbContextAuth" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Rol" EntityType="AuthModel.Rol" />
+          <EntitySet Name="RolUsuario" EntityType="AuthModel.RolUsuario" />
+          <EntitySet Name="Session" EntityType="AuthModel.Session" />
+          <EntitySet Name="Usuario" EntityType="AuthModel.Usuario" />
+          <AssociationSet Name="FK__RolUsuari__IdRol__2F10007B" Association="AuthModel.FK__RolUsuari__IdRol__2F10007B">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolUsuario" EntitySet="RolUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RolUsuari__IdUsu__2E1BDC42" Association="AuthModel.FK__RolUsuari__IdUsu__2E1BDC42">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="RolUsuario" EntitySet="RolUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Session__IdUsuar__300424B4" Association="AuthModel.FK__Session__IdUsuar__300424B4">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Session" EntitySet="Session" />
+          </AssociationSet>
+          <EntitySet Name="usuarios" EntityType="AuthModel.usuarios" />
+        </EntityContainer>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoRol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescRol" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RolUsuario" Relationship="AuthModel.FK__RolUsuari__IdRol__2F10007B" FromRole="Rol" ToRole="RolUsuario" />
+        </EntityType>
+        <EntityType Name="RolUsuario">
+          <Key>
+            <PropertyRef Name="IdRolUsuario" />
+          </Key>
+          <Property Name="IdRolUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rol" Relationship="AuthModel.FK__RolUsuari__IdRol__2F10007B" FromRole="RolUsuario" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="AuthModel.FK__RolUsuari__IdUsu__2E1BDC42" FromRole="RolUsuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Session">
+          <Key>
+            <PropertyRef Name="IdSession" />
+          </Key>
+          <Property Name="IdSession" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaTermino" Type="DateTime" Precision="3" />
+          <Property Name="IdEstatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="AuthModel.FK__Session__IdUsuar__300424B4" FromRole="Session" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Clave" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstatus" Type="Boolean" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Paterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Materno" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioCrea" Type="Int32" />
+          <Property Name="FechaCrea" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="FechaVigenciaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaVigenciaFin" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="RolUsuario" Relationship="AuthModel.FK__RolUsuari__IdUsu__2E1BDC42" FromRole="Usuario" ToRole="RolUsuario" />
+          <NavigationProperty Name="Session" Relationship="AuthModel.FK__Session__IdUsuar__300424B4" FromRole="Usuario" ToRole="Session" />
+          <Property Name="token_recovery" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__RolUsuari__IdRol__2F10007B">
+          <End Type="AuthModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="AuthModel.RolUsuario" Role="RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RolUsuari__IdUsu__2E1BDC42">
+          <End Type="AuthModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="AuthModel.RolUsuario" Role="RolUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="RolUsuario">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Session__IdUsuar__300424B4">
+          <End Type="AuthModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="AuthModel.Session" Role="Session" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Session">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="primerApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="segundoApellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="curp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="correo_1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo_2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vigenciaInicio" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioAlta" Type="Int32" />
+          <Property Name="vigenciaFin" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioUltimaModificacion" Type="Int32" />
+          <Property Name="idStatus" Type="Boolean" />
+          <Property Name="idUsuarioAnterior" Type="Int32" />
+          <Property Name="token_recovery" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AuthModelStoreContainer" CdmEntityContainer="DbContextAuth">
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="AuthModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="DescRol" ColumnName="DescRol" />
+                <ScalarProperty Name="TipoRol" ColumnName="TipoRol" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolUsuario">
+            <EntityTypeMapping TypeName="AuthModel.RolUsuario">
+              <MappingFragment StoreEntitySet="RolUsuario">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdRolUsuario" ColumnName="IdRolUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Session">
+            <EntityTypeMapping TypeName="AuthModel.Session">
+              <MappingFragment StoreEntitySet="Session">
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="FechaTermino" ColumnName="FechaTermino" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSession" ColumnName="IdSession" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="AuthModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="token_recovery" ColumnName="token_recovery" />
+                <ScalarProperty Name="FechaVigenciaFin" ColumnName="FechaVigenciaFin" />
+                <ScalarProperty Name="FechaVigenciaInicio" ColumnName="FechaVigenciaInicio" />
+                <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+                <ScalarProperty Name="IdUsuarioCrea" ColumnName="IdUsuarioCrea" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Materno" ColumnName="Materno" />
+                <ScalarProperty Name="Paterno" ColumnName="Paterno" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="AuthModel.usuarios">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="token_recovery" ColumnName="token_recovery" />
+                <ScalarProperty Name="idUsuarioAnterior" ColumnName="idUsuarioAnterior" />
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="idUsuarioUltimaModificacion" ColumnName="idUsuarioUltimaModificacion" />
+                <ScalarProperty Name="vigenciaFin" ColumnName="vigenciaFin" />
+                <ScalarProperty Name="idUsuarioAlta" ColumnName="idUsuarioAlta" />
+                <ScalarProperty Name="vigenciaInicio" ColumnName="vigenciaInicio" />
+                <ScalarProperty Name="correo_2" ColumnName="correo_2" />
+                <ScalarProperty Name="correo_1" ColumnName="correo_1" />
+                <ScalarProperty Name="curp" ColumnName="curp" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="segundoApellido" ColumnName="segundoApellido" />
+                <ScalarProperty Name="primerApellido" ColumnName="primerApellido" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
